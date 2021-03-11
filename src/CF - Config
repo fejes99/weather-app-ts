@@ -1,0 +1,26 @@
+CF - Config
+GA - Gateway
+BD - business domain
+UI - User interface 
+
+
+CF -> GA -> BD -> UI
+
+Config
+
+BD
+- getTemp (city)
+- getTempForLocation
+
+
+- data Temp = C(double) | K(double) | F(double)
+- GetCurrentLocation -> () -> Promise<(Lon, Lat)>
+- GetCityLonLat :: (City) -> Promise<(Lon, Lat)>
+- GetTemp :: (Lon, Lat) -> Promise<Temp>
+- ConvertTemp :: Temp -> Temp
+
+
+const Domain = () => {
+    
+}
+

@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { EnvT } from './env';
+import env from './envImpl';
+
+export const EnvContext = createContext<EnvT>(env);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <EnvContext.Provider value={env}>
+      <App />
+    </EnvContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
