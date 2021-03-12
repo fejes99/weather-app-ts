@@ -10,6 +10,7 @@ export type GeoLocationT = {
   getCurrentLocation: () => Promise<[Lon, Lat]>;
   getCityLonLat: (query: string) => Promise<[Lon, Lat]>;
   getTemperature: (lat: Lat, lon: Lon) => Promise<TemperatureT>;
+  getForecastForDays: (lat: Lat, lon: Lon) => Promise<any>;
 };
 
 export type EnvT = {

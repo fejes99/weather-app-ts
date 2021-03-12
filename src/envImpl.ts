@@ -1,4 +1,4 @@
-import { mkC, TemperatureT } from './domains/weather/temperature';
+import { mkC } from './domains/weather/temperature';
 import { EnvT } from './env';
 
 const envImpl: EnvT = {
@@ -65,6 +65,22 @@ const envImpl: EnvT = {
         weather: Weather[];
       };
 
+      type Temp = {
+        day: number;
+        min: number;
+        max: number;
+        night: number;
+        eve: number;
+        morn: number;
+      };
+
+      type FeelsLike = {
+        day: number;
+        night: number;
+        eve: number;
+        morn: number;
+      };
+
       type Weather2 = {
         id: number;
         main: string;
@@ -72,12 +88,56 @@ const envImpl: EnvT = {
         icon: string;
       };
 
-      type Rain = {
-        hour: number;
+      type Daily = {
+        dt: number;
+        sunrise: number;
+        sunset: number;
+        temp: Temp;
+        feels_like: FeelsLike;
+        pressure: number;
+        humidity: number;
+        dew_point: number;
+        wind_speed: number;
+        wind_deg: number;
+        weather: Weather2[];
+        clouds: number;
+        pop: number;
+        uvi: number;
+        rain?: number;
       };
 
-      type Hourly = {
+      type RootObject = {
+        lat: number;
+        lon: number;
+        timezone: string;
+        timezone_offset: number;
+        current: Current;
+        daily: Daily[];
+      };
+
+      const key = '536dd89a8107e8f5f539928bf3f9225d';
+
+      return fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric&appid=${key}`
+      )
+        .then((res) => res.json())
+        .then((res: RootObject) => {
+          console.log(res);
+          return mkC(res.current.temp);
+        });
+    },
+    getForecastForDays: (lat, lon) => {
+      type Weather = {
+        id: number;
+        main: string;
+        description: string;
+        icon: string;
+      };
+
+      type Current = {
         dt: number;
+        sunrise: number;
+        sunset: number;
         temp: number;
         feels_like: number;
         pressure: number;
@@ -88,9 +148,48 @@ const envImpl: EnvT = {
         visibility: number;
         wind_speed: number;
         wind_deg: number;
+        weather: Weather[];
+      };
+
+      type Temp = {
+        day: number;
+        min: number;
+        max: number;
+        night: number;
+        eve: number;
+        morn: number;
+      };
+
+      type FeelsLike = {
+        day: number;
+        night: number;
+        eve: number;
+        morn: number;
+      };
+
+      type Weather2 = {
+        id: number;
+        main: string;
+        description: string;
+        icon: string;
+      };
+
+      type Daily = {
+        dt: number;
+        sunrise: number;
+        sunset: number;
+        temp: Temp;
+        feels_like: FeelsLike;
+        pressure: number;
+        humidity: number;
+        dew_point: number;
+        wind_speed: number;
+        wind_deg: number;
         weather: Weather2[];
+        clouds: number;
         pop: number;
-        rain: Rain;
+        uvi: number;
+        rain?: number;
       };
 
       type RootObject = {
@@ -99,7 +198,7 @@ const envImpl: EnvT = {
         timezone: string;
         timezone_offset: number;
         current: Current;
-        hourly: Hourly[];
+        daily: Daily[];
       };
 
       const key = '536dd89a8107e8f5f539928bf3f9225d';
@@ -108,12 +207,10 @@ const envImpl: EnvT = {
         `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric&appid=${key}`
       )
         .then((res) => res.json())
-        .then(
-          (res: RootObject): TemperatureT => {
-            console.log(res);
-            return mkC(res.current.temp);
-          }
-        );
+        .then((res: RootObject) => {
+          console.log(res);
+          return res;
+        });
     },
   },
 };

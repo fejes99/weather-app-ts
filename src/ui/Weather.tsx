@@ -22,20 +22,24 @@ export default function Weather(this: any) {
     getTemperature(env, lonLat[0], lonLat[1]).then((res) => setTemp(res));
   }, [env, lonLat]);
 
-  const findMyLocation = () => {
+  type FindMyLocation = () => void;
+  const findMyLocation: FindMyLocation = () => {
     getCurrentLocation(env).then((lonLat) => setLonLat(lonLat));
   };
 
-  const showTemp = () => {
+  type ShowTemp = () => void;
+  const showTemp: ShowTemp = () => {
     getCityLonLat(env, city).then((lonLat) => setLonLat(lonLat));
   };
 
-  const convertTo = (m: 'C' | 'K' | 'F') => {
+  type ConvertTo = (m: 'C' | 'K' | 'F') => void;
+  const convertTo: ConvertTo = (m) => {
     const convertedTemp = convertTemp(temp, m);
     setTemp(convertedTemp);
   };
 
-  const handleInputChange = (newCity: string) => {
+  type HandleInputChange = (newCity: string) => void;
+  const handleInputChange: HandleInputChange = (newCity) => {
     setCity(newCity);
   };
 

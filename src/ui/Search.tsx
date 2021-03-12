@@ -22,11 +22,13 @@ const useStyles = makeStyles((theme: Theme) =>
 const Search = (props: Props) => {
   const classes = useStyles();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  type HandleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  const handleChange: HandleChange = (event) => {
     props.onChange(event.target.value);
   };
 
-  const onFormSubmit = (event: { preventDefault: () => void }) => {
+  type OnFormSubmit = (event: { preventDefault: () => void }) => void;
+  const onFormSubmit: OnFormSubmit = (event) => {
     event.preventDefault();
     props.onSubmit();
   };

@@ -20,5 +20,3 @@ export const getTemperature: getTemperatureT = ({ logger, geoLocation }, lat, lo
   logger.log(`Temperature for ${lat}, ${lon}`);
   return geoLocation.getTemperature(lat, lon);
 };
-
-// const getTemperature = (lat, lon) => {};
